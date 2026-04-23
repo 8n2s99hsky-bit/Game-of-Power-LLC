@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game of Power LLC — AI-Powered Marketing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;1,700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple: #8B2FC9;
+  --purple-light: #B44FFF;
+  --purple-bright: #C46EFF;
+  --purple-dim: rgba(139,47,201,0.15);
+  --black: #070709;
+  --dark: #0d0b10;
+  --dark2: #120f17;
+  --white: #F2EEF8;
+  --gray: #55505e;
+  --gray-light: rgba(242,238,248,0.5);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--white);font-family:'Barlow',sans-serif;overflow-x:hidden;cursor:none;}
+a{text-decoration:none;color:inherit;}
+
+/* CURSOR */
+.cursor{width:10px;height:10px;background:var(–purple-light);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .15s,height .15s,background .2s;}
+.cursor-ring{width:34px;height:34px;border:1.5px solid rgba(180,79,255,0.6);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:transform .12s ease,width .2s,height .2s;}
+body.hover-link .cursor{width:18px;height:18px;background:var(–purple-bright);}
+body.hover-link .cursor-ring{width:50px;height:50px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 4rem;transition:background .4s,border-bottom .4s;}
+nav.scrolled{background:rgba(7,7,9,0.96);border-bottom:1px solid rgba(139,47,201,0.2);backdrop-filter:blur(14px);}
+.nav-logo{font-family:‘Bebas Neue’,sans-serif;font-size:1.7rem;letter-spacing:.1em;color:var(–purple-light);}
+.nav-logo span{color:var(–white);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{font-family:‘Barlow Condensed’,sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(–white);opacity:.6;transition:opacity .2s,color .2s;}
+.nav-links a:hover{opacity:1;color:var(–purple-light);}
+.nav-cta{font-family:‘Barlow Condensed’,sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(–white);background:var(–purple);padding:.65rem 1.6rem;transition:background .2s,transform .2s;display:inline-block;}
+.nav-cta:hover{background:var(–purple-light);transform:translateY(-2px);}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
+.nav-hamburger span{display:block;width:24px;height:2px;background:var(–white);transition:.3s;}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:0 4rem;}
+.hero-bg{position:absolute;inset:0;background:var(–black);}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(139,47,201,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(139,47,201,.04) 1px,transparent 1px);background-size:64px 64px;animation:gridMove 24s linear infinite;}
+@keyframes gridMove{to{background-position:64px 64px;}}
+.hero-slash{position:absolute;right:-8%;top:-20%;bottom:-20%;width:52%;background:linear-gradient(135deg,transparent 0%,rgba(139,47,201,.04) 50%,transparent 100%);border-left:1.5px solid rgba(139,47,201,.14);transform:skewX(-8deg);z-index:1;}
+.hero-glow{position:absolute;top:15%;left:25%;width:700px;height:700px;background:radial-gradient(circle,rgba(139,47,201,.1) 0%,rgba(139,47,201,.04) 40%,transparent 70%);z-index:1;pointer-events:none;animation:glowPulse 6s ease-in-out infinite;}
+.hero-glow2{position:absolute;bottom:10%;right:15%;width:400px;height:400px;background:radial-gradient(circle,rgba(180,79,255,.06) 0%,transparent 70%);z-index:1;pointer-events:none;animation:glowPulse 8s ease-in-out 2s infinite;}
+@keyframes glowPulse{0%,100%{opacity:.7;transform:scale(1);}50%{opacity:1;transform:scale(1.08);}}
+.hero-content{position:relative;z-index:10;max-width:960px;}
+.hero-eyebrow{font-family:‘Barlow Condensed’,sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.4em;text-transform:uppercase;color:var(–purple-light);margin-bottom:1.8rem;display:flex;align-items:center;gap:1rem;opacity:0;animation:fadeUp .7s ease .2s forwards;}
+.hero-eyebrow::before{content:’’;width:36px;height:2px;background:var(–purple-light);flex-shrink:0;}
+.hero-title{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(5rem,14vw,14rem);line-height:.85;letter-spacing:-.01em;opacity:0;animation:fadeUp .8s ease .4s forwards;}
+.hero-title .line1{color:var(–white);display:block;}
+.hero-title .line2{color:var(–purple-light);display:block;text-shadow:0 0 60px rgba(180,79,255,.4);}
+.hero-title .line3{-webkit-text-stroke:2px rgba(242,238,248,.2);color:transparent;display:block;}
+.hero-sub{font-size:clamp(.95rem,1.6vw,1.2rem);font-weight:300;line-height:1.7;color:var(–gray-light);max-width:460px;margin:2.2rem 0 3rem;opacity:0;animation:fadeUp .7s ease .6s forwards;}
+.hero-actions{display:flex;gap:1.4rem;align-items:center;flex-wrap:wrap;opacity:0;animation:fadeUp .7s ease .8s forwards;}
+.btn-purple{font-family:‘Barlow Condensed’,sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;background:var(–purple);color:var(–white);padding:1rem 2.6rem;display:inline-block;position:relative;overflow:hidden;transition:transform .2s;box-shadow:0 0 30px rgba(139,47,201,.35);}
+.btn-purple::after{content:’’;position:absolute;inset:0;background:var(–purple-light);transform:translateX(-101%);transition:transform .3s ease;}
+.btn-purple:hover::after{transform:translateX(0);}
+.btn-purple:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(180,79,255,.5);}
+.btn-purple span{position:relative;z-index:1;}
+.btn-outline{font-family:‘Barlow Condensed’,sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(–white);border:1px solid rgba(242,238,248,.25);padding:1rem 2.6rem;display:inline-block;transition:border-color .2s,color .2s,transform .2s;}
+.btn-outline:hover{border-color:var(–purple-light);color:var(–purple-light);transform:translateY(-3px);}
+.hero-scroll{position:absolute;bottom:2.5rem;left:4rem;z-index:10;display:flex;align-items:center;gap:.9rem;font-family:‘Barlow Condensed’,sans-serif;font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(242,238,248,.25);opacity:0;animation:fadeUp 1s ease 1.2s forwards;}
+.scroll-bar{width:40px;height:1px;background:rgba(242,238,248,.12);overflow:hidden;position:relative;}
+.scroll-bar::after{content:’’;position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(–purple-light);animation:scan 2.2s ease-in-out 1.8s infinite;}
+@keyframes scan{to{left:100%;}}
+.hero-stat-strip{position:absolute;bottom:0;right:0;left:0;z-index:10;border-top:1px solid rgba(139,47,201,.15);display:flex;opacity:0;animation:fadeIn 1s ease 1.4s forwards;}
+.hero-stat{flex:1;padding:1.4rem 2rem;border-right:1px solid rgba(139,47,201,.12);text-align:center;}
+.hero-stat:last-child{border-right:none;}
+.hero-stat-num{font-family:‘Bebas Neue’,sans-serif;font-size:2.4rem;color:var(–purple-light);line-height:1;}
+.hero-stat-label{font-family:‘Barlow Condensed’,sans-serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(–gray-light);margin-top:.3rem;}
+
+/* TICKER */
+.ticker{background:var(–purple);overflow:hidden;white-space:nowrap;padding:.7rem 0;}
+.ticker-inner{display:inline-flex;animation:ticker 28s linear infinite;}
+.ticker-item{font-family:‘Bebas Neue’,sans-serif;font-size:1.1rem;letter-spacing:.15em;color:var(–white);padding:0 2.5rem;display:inline-flex;align-items:center;gap:2rem;opacity:.9;}
+.ticker-item::after{content:‘✦’;opacity:.5;}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* SECTION SHARED */
+section{padding:8rem 4rem;}
+.section-label{font-family:‘Barlow Condensed’,sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.38em;text-transform:uppercase;color:var(–purple-light);margin-bottom:1.2rem;display:flex;align-items:center;gap:.9rem;}
+.section-label::before{content:’’;width:28px;height:2px;background:var(–purple-light);flex-shrink:0;}
+.section-title{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(3rem,7vw,7rem);line-height:.9;color:var(–white);}
+.section-title .purple{color:var(–purple-light);}
+.section-title .stroke{-webkit-text-stroke:1.5px rgba(242,238,248,.18);color:transparent;}
+
+/* ABOUT */
+#about{background:var(–dark);position:relative;overflow:hidden;}
+.about-bg-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:‘Bebas Neue’,sans-serif;font-size:22vw;color:rgba(139,47,201,.03);white-space:nowrap;pointer-events:none;z-index:0;letter-spacing:.05em;}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;position:relative;z-index:1;}
+.about-text p{font-size:1.05rem;font-weight:300;line-height:1.8;color:var(–gray-light);margin-bottom:1.5rem;}
+.about-text p strong{color:var(–white);font-weight:500;}
+.about-values{margin-top:2.5rem;display:flex;flex-direction:column;gap:1rem;}
+.about-value{display:flex;align-items:flex-start;gap:1rem;padding:1.2rem 1.4rem;border:1px solid rgba(139,47,201,.15);transition:border-color .3s,background .3s;}
+.about-value:hover{border-color:rgba(139,47,201,.5);background:rgba(139,47,201,.05);}
+.about-value-icon{font-family:‘Bebas Neue’,sans-serif;font-size:1.8rem;color:var(–purple-light);line-height:1;min-width:36px;}
+.about-value-text h4{font-family:‘Barlow Condensed’,sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(–white);margin-bottom:.3rem;}
+.about-value-text p{font-size:.88rem;color:var(–gray-light);line-height:1.6;}
+.about-visual{position:relative;}
+.about-card{background:var(–dark2);border:1px solid rgba(139,47,201,.2);padding:3rem;position:relative;overflow:hidden;}
+.about-card::before{content:’’;position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(–purple),var(–purple-light),var(–purple-bright),var(–purple));}
+.about-card::after{content:’’;position:absolute;inset:0;background:radial-gradient(ellipse at top left,rgba(139,47,201,.08) 0%,transparent 60%);pointer-events:none;}
+.about-card-title{font-family:‘Bebas Neue’,sans-serif;font-size:3.5rem;color:var(–purple-light);line-height:1;margin-bottom:.5rem;text-shadow:0 0 40px rgba(180,79,255,.3);}
+.about-card-sub{font-family:‘Barlow Condensed’,sans-serif;font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(–gray-light);margin-bottom:2rem;}
+.about-card p{font-size:.95rem;font-weight:300;line-height:1.8;color:var(–gray-light);position:relative;z-index:1;}
+.about-card-stamp{position:absolute;bottom:1.5rem;right:1.5rem;font-family:‘Bebas Neue’,sans-serif;font-size:5rem;color:rgba(139,47,201,.07);line-height:1;}
+
+/* SERVICES */
+#services{background:var(–black);}
+.services-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4rem;flex-wrap:wrap;gap:2rem;}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:rgba(139,47,201,.1);}
+.service-card{background:var(–black);padding:3rem 2.5rem;position:relative;overflow:hidden;transition:background .3s;}
+.service-card::before{content:’’;position:absolute;bottom:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(–purple),var(–purple-light));transform:scaleX(0);transform-origin:left;transition:transform .4s ease;}
+.service-card:hover{background:var(–dark);}
+.service-card:hover::before{transform:scaleX(1);}
+.service-num{font-family:‘Bebas Neue’,sans-serif;font-size:4rem;color:rgba(139,47,201,.1);line-height:1;margin-bottom:1.5rem;transition:color .3s;}
+.service-card:hover .service-num{color:rgba(180,79,255,.25);}
+.service-icon{font-size:2rem;margin-bottom:1.2rem;}
+.service-name{font-family:‘Bebas Neue’,sans-serif;font-size:1.9rem;letter-spacing:.03em;color:var(–white);margin-bottom:1rem;line-height:1.1;}
+.service-desc{font-size:.9rem;font-weight:300;line-height:1.75;color:var(–gray-light);}
+.service-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem;}
+.service-tag{font-family:‘Barlow Condensed’,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(–purple-light);border:1px solid rgba(139,47,201,.3);padding:.3rem .7rem;}
+
+/* PRICING */
+#pricing{background:var(–dark);position:relative;overflow:hidden;}
+.pricing-bg-text{position:absolute;bottom:-4rem;right:-2rem;font-family:‘Bebas Neue’,sans-serif;font-size:20vw;color:rgba(139,47,201,.03);pointer-events:none;line-height:1;}
+.pricing-bg-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(139,47,201,.06) 0%,transparent 70%);pointer-events:none;}
+.pricing-header{text-align:center;max-width:640px;margin:0 auto 5rem;position:relative;z-index:1;}
+.pricing-header .section-label{justify-content:center;}
+.pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px;background:rgba(139,47,201,.1);position:relative;z-index:1;}
+.price-card{background:var(–dark);padding:2.8rem 2.2rem;position:relative;overflow:hidden;transition:background .3s;display:flex;flex-direction:column;}
+.price-card:hover{background:var(–dark2);}
+.price-card.featured{background:var(–black);}
+.price-card.featured::before{content:‘MOST POPULAR’;position:absolute;top:0;left:0;right:0;background:var(–purple);color:var(–white);font-family:‘Barlow Condensed’,sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.3em;text-align:center;padding:.5rem;}
+.price-card.featured .price-inner{margin-top:2rem;}
+.price-card.featured::after{content:’’;position:absolute;inset:0;border:1px solid rgba(139,47,201,.35);pointer-events:none;}
+.price-tier{font-family:‘Barlow Condensed’,sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(–purple-light);margin-bottom:1rem;}
+.price-name{font-family:‘Bebas Neue’,sans-serif;font-size:2.4rem;color:var(–white);line-height:1;margin-bottom:1.5rem;}
+.price-amount{display:flex;align-items:flex-start;gap:.3rem;margin-bottom:.5rem;}
+.price-dollar{font-family:‘Bebas Neue’,sans-serif;font-size:1.2rem;color:var(–purple-light);margin-top:.5rem;}
+.price-num{font-family:‘Bebas Neue’,sans-serif;font-size:4rem;color:var(–white);line-height:1;}
+.price-period{font-family:‘Barlow Condensed’,sans-serif;font-size:.8rem;color:var(–gray);align-self:flex-end;margin-bottom:.5rem;}
+.price-desc{font-size:.82rem;font-weight:300;line-height:1.6;color:var(–gray-light);margin-bottom:2rem;min-height:3rem;}
+.price-divider{height:1px;background:rgba(139,47,201,.15);margin-bottom:2rem;}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:.9rem;margin-bottom:2.5rem;flex:1;}
+.price-features li{font-size:.85rem;font-weight:300;color:var(–gray-light);display:flex;align-items:flex-start;gap:.7rem;line-height:1.5;}
+.price-features li::before{content:‘✓’;color:var(–purple-light);font-family:‘Barlow Condensed’,sans-serif;font-weight:700;flex-shrink:0;margin-top:.05rem;}
+.price-features li.no::before{content:‘✗’;color:var(–gray);}
+.price-features li.no{opacity:.35;}
+.price-btn{font-family:‘Barlow Condensed’,sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;display:block;text-align:center;padding:.95rem;border:1px solid rgba(139,47,201,.35);color:var(–white);transition:background .2s,color .2s,border-color .2s,transform .2s,box-shadow .2s;margin-top:auto;}
+.price-btn:hover{background:var(–purple);border-color:var(–purple);transform:translateY(-2px);box-shadow:0 8px 30px rgba(139,47,201,.4);}
+.price-card.featured .price-btn{background:var(–purple);color:var(–white);border-color:var(–purple);box-shadow:0 4px 20px rgba(139,47,201,.3);}
+.price-card.featured .price-btn:hover{background:var(–purple-light);border-color:var(–purple-light);box-shadow:0 8px 40px rgba(180,79,255,.5);}
+.pricing-note{text-align:center;margin-top:3rem;font-size:.82rem;color:var(–gray);font-weight:300;position:relative;z-index:1;}
+.pricing-note a{color:var(–purple-light);border-bottom:1px solid rgba(139,47,201,.3);}
+
+/* FAQ */
+#faq{background:var(–black);}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:4rem;}
+.faq-intro p{font-size:1rem;font-weight:300;line-height:1.8;color:var(–gray-light);margin-bottom:1.5rem;}
+.faq-cta-block{margin-top:3rem;padding:2.5rem;border:1px solid rgba(139,47,201,.2);background:rgba(139,47,201,.03);}
+.faq-cta-block h4{font-family:‘Bebas Neue’,sans-serif;font-size:1.8rem;color:var(–white);margin-bottom:.6rem;}
+.faq-cta-block p{font-size:.88rem;color:var(–gray-light);margin-bottom:1.5rem;}
+.faq-items{display:flex;flex-direction:column;}
+.faq-item{border-bottom:1px solid rgba(139,47,201,.12);}
+.faq-q{width:100%;background:none;border:none;color:var(–white);font-family:‘Barlow Condensed’,sans-serif;font-size:1rem;font-weight:600;letter-spacing:.05em;text-align:left;padding:1.5rem 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;transition:color .2s;}
+.faq-q:hover{color:var(–purple-light);}
+.faq-q .faq-icon{font-size:1.2rem;color:var(–purple-light);transition:transform .3s;flex-shrink:0;}
+.faq-q.open .faq-icon{transform:rotate(45deg);}
+.faq-a{font-size:.88rem;font-weight:300;line-height:1.8;color:var(–gray-light);max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s ease;}
+.faq-a.open{max-height:400px;padding-bottom:1.5rem;}
+
+/* CTA BANNER */
+#cta-banner{background:var(–purple);padding:6rem 4rem;text-align:center;position:relative;overflow:hidden;}
+#cta-banner::before{content:‘GAME OF POWER’;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:‘Bebas Neue’,sans-serif;font-size:18vw;color:rgba(0,0,0,.12);white-space:nowrap;pointer-events:none;letter-spacing:.05em;}
+#cta-banner::after{content:’’;position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(196,110,255,.2) 0%,transparent 70%);pointer-events:none;}
+.cta-banner-content{position:relative;z-index:1;}
+.cta-banner-title{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(3rem,7vw,7rem);color:var(–white);line-height:.9;margin-bottom:1.5rem;text-shadow:0 4px 30px rgba(0,0,0,.3);}
+.cta-banner-sub{font-size:1.1rem;font-weight:300;color:rgba(242,238,248,.75);max-width:480px;margin:0 auto 3rem;}
+.btn-dark{font-family:‘Barlow Condensed’,sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;background:var(–black);color:var(–purple-light);padding:1.1rem 3rem;display:inline-block;transition:background .2s,transform .2s,box-shadow .2s;}
+.btn-dark:hover{background:#1a0f22;transform:translateY(-3px);box-shadow:0 10px 40px rgba(0,0,0,.4);}
+
+/* FOOTER */
+footer{background:var(–dark);border-top:1px solid rgba(139,47,201,.12);padding:4rem 4rem 2.5rem;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem;}
+.footer-brand .nav-logo{font-size:1.8rem;display:block;margin-bottom:1rem;}
+.footer-brand p{font-size:.85rem;font-weight:300;line-height:1.7;color:var(–gray-light);max-width:280px;}
+.footer-col h5{font-family:‘Barlow Condensed’,sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(–purple-light);margin-bottom:1.2rem;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.7rem;}
+.footer-col ul a{font-size:.85rem;font-weight:300;color:var(–gray-light);transition:color .2s;}
+.footer-col ul a:hover{color:var(–purple-light);}
+.footer-bottom{border-top:1px solid rgba(139,47,201,.08);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-copy{font-size:.78rem;color:var(–gray);}
+.footer-legal{display:flex;gap:1.5rem;}
+.footer-legal a{font-size:.78rem;color:var(–gray);transition:color .2s;}
+.footer-legal a:hover{color:var(–purple-light);}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+.pricing-grid{grid-template-columns:repeat(2,1fr);}
+.about-grid{grid-template-columns:1fr;}
+.footer-top{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:900px){
+nav{padding:1.2rem 2rem;}
+.nav-links,.nav-cta{display:none;}
+.nav-hamburger{display:flex;}
+#hero,section,#cta-banner{padding-left:2rem;padding-right:2rem;}
+.hero-scroll{left:2rem;}
+.hero-stat-strip{display:none;}
+.services-grid{grid-template-columns:1fr;}
+.faq-grid{grid-template-columns:1fr;}
+.footer-top{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+.pricing-grid{grid-template-columns:1fr;}
+footer{padding:3rem 2rem 2rem;}
+}
+</style>
+
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">GAME<span> OF POWER</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#pricing" class="nav-cta">Get Started</a>
+  <div class="nav-hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+
+<section id="hero">
+  <div class="hero-bg">
+    <div class="hero-grid"></div>
+    <div class="hero-slash"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Louisiana-Based · AI-Powered Marketing</div>
+    <h1 class="hero-title">
+      <span class="line1">DOMINATE</span>
+      <span class="line2">YOUR</span>
+      <span class="line3">MARKET</span>
+    </h1>
+    <p class="hero-sub">Game of Power LLC fuses AI intelligence with battle-tested marketing strategy to build brands that can't be ignored.</p>
+    <div class="hero-actions">
+      <a href="#pricing" class="btn-purple"><span>View Plans</span></a>
+      <a href="#about" class="btn-outline">Learn More</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-bar"></div>Scroll to Explore</div>
+  <div class="hero-stat-strip">
+    <div class="hero-stat"><div class="hero-stat-num">5X</div><div class="hero-stat-label">Avg. ROI</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">100+</div><div class="hero-stat-label">Brands Served</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">AI</div><div class="hero-stat-label">Powered Content</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">24/7</div><div class="hero-stat-label">Campaign Mgmt</div></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">AI-Powered Content</span>
+    <span class="ticker-item">Brand Development</span>
+    <span class="ticker-item">Digital Strategy</span>
+    <span class="ticker-item">Social Media</span>
+    <span class="ticker-item">Paid Ads</span>
+    <span class="ticker-item">Game of Power LLC</span>
+    <span class="ticker-item">AI-Powered Content</span>
+    <span class="ticker-item">Brand Development</span>
+    <span class="ticker-item">Digital Strategy</span>
+    <span class="ticker-item">Social Media</span>
+    <span class="ticker-item">Paid Ads</span>
+    <span class="ticker-item">Game of Power LLC</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+
+<section id="about">
+  <div class="about-bg-text">GOP</div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <div class="section-label">Our Story</div>
+      <h2 class="section-title" style="margin-bottom:2rem;">WE <span class="purple">BUILD</span><br><span class="stroke">EMPIRES</span></h2>
+      <p>Game of Power LLC was built on one belief: <strong>your brand should be as powerful as your vision.</strong> We're a Louisiana-based marketing agency that fuses cutting-edge AI technology with human creativity to deliver results that move markets.</p>
+      <p>We don't do generic. Every strategy, every piece of content, every campaign is engineered specifically for your brand — built to convert, built to scale, built to last.</p>
+      <div class="about-values">
+        <div class="about-value">
+          <div class="about-value-icon">01</div>
+          <div class="about-value-text"><h4>AI-First Thinking</h4><p>We leverage the latest AI tools to outpace the competition and deliver content at scale without sacrificing quality.</p></div>
+        </div>
+        <div class="about-value">
+          <div class="about-value-icon">02</div>
+          <div class="about-value-text"><h4>Data-Driven Strategy</h4><p>Every decision we make is backed by real data — no guessing, no wasted budget, no fluff.</p></div>
+        </div>
+        <div class="about-value">
+          <div class="about-value-icon">03</div>
+          <div class="about-value-text"><h4>Full Accountability</h4><p>We operate as an extension of your team. Your growth is our mandate — period.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual reveal">
+      <div class="about-card">
+        <div class="about-card-title">GAME<br>OF<br>POWER</div>
+        <div class="about-card-sub">Est. 2025 · Baton Rouge, LA</div>
+        <p>Founded to give ambitious brands the competitive edge they deserve. We combine AI tools, creative firepower, and relentless execution to make your brand impossible to ignore.</p>
+        <div class="about-card-stamp">GOP</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+
+<section id="services">
+  <div class="services-header">
+    <div>
+      <div class="section-label">What We Do</div>
+      <h2 class="section-title">OUR <span class="purple">SERVICES</span></h2>
+    </div>
+    <a href="#pricing" class="btn-outline">See Pricing →</a>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <div class="service-icon">🤖</div>
+      <div class="service-name">AI-Powered Content Creation</div>
+      <p class="service-desc">High-volume, high-quality content engineered by AI and refined by human strategy. Blog posts, ad copy, scripts, email sequences — all on-brand and built to convert.</p>
+      <div class="service-tags"><span class="service-tag">Blog & Articles</span><span class="service-tag">Ad Copy</span><span class="service-tag">Email Sequences</span><span class="service-tag">Video Scripts</span></div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">02</div>
+      <div class="service-icon">📐</div>
+      <div class="service-name">Digital Marketing Strategy</div>
+      <p class="service-desc">No more shooting in the dark. We build comprehensive digital strategies that map your customer journey, allocate your budget intelligently, and set measurable growth targets.</p>
+      <div class="service-tags"><span class="service-tag">Market Research</span><span class="service-tag">Funnel Design</span><span class="service-tag">KPI Tracking</span></div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">03</div>
+      <div class="service-icon">👑</div>
+      <div class="service-name">Brand Development</div>
+      <p class="service-desc">From identity to voice to visual language — we build brands that command respect. Strategy-led, visually striking, and built to dominate every touchpoint.</p>
+      <div class="service-tags"><span class="service-tag">Brand Identity</span><span class="service-tag">Brand Voice</span><span class="service-tag">Style Guides</span></div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">04</div>
+      <div class="service-icon">📱</div>
+      <div class="service-name">Social Media Management</div>
+      <p class="service-desc">Full-service social management across all major platforms. We handle content creation, scheduling, community management, and analytics so you can focus on running your business.</p>
+      <div class="service-tags"><span class="service-tag">Instagram</span><span class="service-tag">TikTok</span><span class="service-tag">LinkedIn</span><span class="service-tag">Facebook</span></div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">05</div>
+      <div class="service-icon">🎯</div>
+      <div class="service-name">Paid Ads & Media Buying</div>
+      <p class="service-desc">ROI-obsessed paid advertising across Meta, Google, TikTok, and more. We write the copy, build the creatives, run the tests, and scale what works — ruthlessly.</p>
+      <div class="service-tags"><span class="service-tag">Meta Ads</span><span class="service-tag">Google Ads</span><span class="service-tag">TikTok Ads</span><span class="service-tag">Retargeting</span></div>
+    </div>
+    <div class="service-card reveal" style="display:flex;flex-direction:column;justify-content:center;align-items:flex-start;background:var(--purple-dim);border:1px solid rgba(139,47,201,.25);">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--purple-light);margin-bottom:1rem;line-height:1;text-shadow:0 0 30px rgba(180,79,255,.3);">READY TO<br>DOMINATE?</div>
+      <p style="font-size:.88rem;font-weight:300;color:var(--gray-light);margin-bottom:1.8rem;line-height:1.7;">Every plan includes a mix of these services — tailored to your tier and your goals.</p>
+      <a href="#pricing" class="btn-purple"><span>Choose a Plan</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+
+<section id="pricing">
+  <div class="pricing-bg-text">$$$</div>
+  <div class="pricing-bg-glow"></div>
+  <div class="pricing-header reveal">
+    <div class="section-label">Transparent Pricing</div>
+    <h2 class="section-title">CHOOSE <span class="purple">YOUR</span><br>LEVEL</h2>
+    <p style="font-size:.95rem;font-weight:300;color:var(--gray-light);margin-top:1.2rem;">Monthly retainers. Cancel anytime. No hidden fees. All plans include onboarding + strategy call.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <div class="price-inner">
+        <div class="price-tier">Tier 01</div>
+        <div class="price-name">STARTER</div>
+        <div class="price-amount"><span class="price-dollar">$</span><span class="price-num">497</span><span class="price-period">/mo</span></div>
+        <p class="price-desc">Perfect for solo entrepreneurs and small businesses ready to build their digital presence.</p>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>AI Content Creation (8 pieces/mo)</li>
+          <li>Social Media Management (2 platforms)</li>
+          <li>Monthly Strategy Report</li>
+          <li>Email Support</li>
+          <li class="no">Paid Ads Management</li>
+          <li class="no">Brand Development</li>
+          <li class="no">Dedicated Account Manager</li>
+        </ul>
+      </div>
+      <a href="https://buy.stripe.com/6oUfZh5mV0wA3dl7Ko8Ra01" class="price-btn" target="_blank">Get Started →</a>
+    </div>
+    <div class="price-card featured reveal">
+      <div class="price-inner">
+        <div class="price-tier">Tier 02</div>
+        <div class="price-name">GROWTH</div>
+        <div class="price-amount"><span class="price-dollar">$</span><span class="price-num">997</span><span class="price-period">/mo</span></div>
+        <p class="price-desc">For growing brands ready to scale their marketing and dominate their niche.</p>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>AI Content Creation (20 pieces/mo)</li>
+          <li>Social Media Management (4 platforms)</li>
+          <li>Paid Ads Management ($2K ad budget)</li>
+          <li>Bi-Weekly Strategy Calls</li>
+          <li>Brand Voice & Messaging Guide</li>
+          <li>Priority Email + Chat Support</li>
+          <li class="no">Dedicated Account Manager</li>
+        </ul>
+      </div>
+      <a href="https://buy.stripe.com/14A14n7v3fruaFN9Sw8Ra07" class="price-btn" target="_blank">Get Started →</a>
+    </div>
+    <div class="price-card reveal">
+      <div class="price-inner">
+        <div class="price-tier">Tier 03</div>
+        <div class="price-name">PRO</div>
+        <div class="price-amount"><span class="price-dollar">$</span><span class="price-num">1,497</span><span class="price-period">/mo</span></div>
+        <p class="price-desc">Full-service marketing for established businesses ready to aggressively grow.</p>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>AI Content Creation (40 pieces/mo)</li>
+          <li>Social Media Management (all platforms)</li>
+          <li>Paid Ads Management ($5K ad budget)</li>
+          <li>Full Brand Development Suite</li>
+          <li>Weekly Strategy Calls</li>
+          <li>Dedicated Account Manager</li>
+          <li>Monthly Performance Dashboard</li>
+        </ul>
+      </div>
+      <a href="https://buy.stripe.com/eVq8wPg1z4MQ4hp4yc8Ra06" class="price-btn" target="_blank">Get Started →</a>
+    </div>
+    <div class="price-card reveal">
+      <div class="price-inner">
+        <div class="price-tier">Tier 04</div>
+        <div class="price-name">ELITE</div>
+        <div class="price-amount"><span class="price-dollar">$</span><span class="price-num">2,497</span><span class="price-period">/mo</span></div>
+        <p class="price-desc">White-glove, enterprise-level marketing for brands that play to win — completely.</p>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>Unlimited AI Content Creation</li>
+          <li>Full Social Media Domination</li>
+          <li>Paid Ads ($10K+ ad budget managed)</li>
+          <li>Complete Brand Overhaul</li>
+          <li>Daily Check-ins + On-Call Strategy</li>
+          <li>Dedicated Senior Account Manager</li>
+          <li>Custom Reporting + Analytics Suite</li>
+        </ul>
+      </div>
+      <a href="https://buy.stripe.com/dRm6oH6qZdjm7tB1m08Ra00" class="price-btn" target="_blank">Get Started →</a>
+    </div>
+  </div>
+  <p class="pricing-note reveal">All plans are month-to-month. Ad spend budgets are client-funded and managed by Game of Power LLC. <a href="#faq">Have questions? See FAQ →</a></p>
+</section>
+
+<!-- FAQ -->
+
+<section id="faq">
+  <div class="faq-grid">
+    <div class="faq-intro reveal">
+      <div class="section-label">FAQ</div>
+      <h2 class="section-title" style="margin-bottom:2rem;">GOT <span class="purple">QUESTIONS?</span></h2>
+      <p>We believe in radical transparency. If you don't see your question answered here, reach out directly — we respond fast.</p>
+      <p>No fluff, no runaround, no corporate speak. Just straight answers from a team that's invested in your success.</p>
+      <div class="faq-cta-block">
+        <h4>READY TO START?</h4>
+        <p>Pick a plan and get onboarded within 48 hours of your first payment.</p>
+        <a href="#pricing" class="btn-purple"><span>View Plans</span></a>
+      </div>
+    </div>
+    <div class="faq-items reveal">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How quickly do we get started after signing up? <span class="faq-icon">+</span></button>
+        <div class="faq-a">Once your payment is processed, we send you an onboarding questionnaire within 24 hours. We schedule your strategy call and kick off work within 48 hours. No waiting weeks to get started.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What does "AI-Powered Content" actually mean? <span class="faq-icon">+</span></button>
+        <div class="faq-a">We use advanced AI tools to research, draft, and structure content at scale — then our human strategists refine and optimize every piece to match your brand voice perfectly. You get the speed of AI with the quality of human expertise.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Is the ad spend included in my monthly plan price? <span class="faq-icon">+</span></button>
+        <div class="faq-a">No — the monthly plan covers our management fees, strategy, creative, and execution. Ad spend is a separate budget paid directly to the ad platforms (Meta, Google, etc.) or billed separately. We manage it on your behalf.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Can I cancel or change my plan? <span class="faq-icon">+</span></button>
+        <div class="faq-a">Yes. All plans are month-to-month with no long-term contracts. You can upgrade, downgrade, or cancel anytime before your next billing cycle. We make it easy — no penalty, no hassle.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Do you work with businesses outside Louisiana? <span class="faq-icon">+</span></button>
+        <div class="faq-a">Absolutely. While we're proudly Louisiana-based, we work with clients across the United States. Our entire workflow is remote-first so geography is never a barrier to results.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How do I know if a plan is working? <span class="faq-icon">+</span></button>
+        <div class="faq-a">Every plan includes performance reporting — weekly or monthly depending on your tier. We track agreed-upon KPIs from day one and give you clear, transparent data. No vanity metrics, just numbers that matter to your business.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+
+<div id="cta-banner">
+  <div class="cta-banner-content">
+    <h2 class="cta-banner-title">STOP PLAYING<br>SMALL.</h2>
+    <p class="cta-banner-sub">Your competitors are scaling while you're standing still. It's time to make your move.</p>
+    <a href="#pricing" class="btn-dark">Choose Your Plan</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#hero" class="nav-logo">GAME<span> OF POWER</span></a>
+      <p>AI-powered marketing and brand development for businesses that refuse to be average. Based in Louisiana. Built for everywhere.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="#services">AI Content Creation</a></li>
+        <li><a href="#services">Digital Strategy</a></li>
+        <li><a href="#services">Brand Development</a></li>
+        <li><a href="#services">Social Media</a></li>
+        <li><a href="#services">Paid Ads</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Get Started</h5>
+      <ul>
+        <li><a href="https://buy.stripe.com/6oUfZh5mV0wA3dl7Ko8Ra01" target="_blank">Starter — $497/mo</a></li>
+        <li><a href="https://buy.stripe.com/14A14n7v3fruaFN9Sw8Ra07" target="_blank">Growth — $997/mo</a></li>
+        <li><a href="https://buy.stripe.com/eVq8wPg1z4MQ4hp4yc8Ra06" target="_blank">Pro — $1,497/mo</a></li>
+        <li><a href="https://buy.stripe.com/dRm6oH6qZdjm7tB1m08Ra00" target="_blank">Elite — $2,497/mo</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Game of Power LLC. All rights reserved. Louisiana, USA.</div>
+    <div class="footer-legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+function animateRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animateRing);}
+animateRing();
+document.querySelectorAll('a,button,.price-card,.service-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hover-link'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hover-link'));
+});
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{navbar.classList.toggle('scrolled',window.scrollY>60);});
+const reveals=document.querySelectorAll('.reveal');
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}});},{threshold:.12});
+reveals.forEach(r=>observer.observe(r));
+function toggleFaq(btn){
+  const answer=btn.nextElementSibling;
+  const isOpen=answer.classList.contains('open');
+  document.querySelectorAll('.faq-a.open').forEach(a=>{a.classList.remove('open');a.previousElementSibling.classList.remove('open');});
+  if(!isOpen){answer.classList.add('open');btn.classList.add('open');}
+}
+document.getElementById('hamburger').addEventListener('click',()=>{
+  const links=document.querySelector('.nav-links');
+  const visible=links.style.display==='flex';
+  links.style.display=visible?'none':'flex';
+  if(!visible){links.style.flexDirection='column';links.style.position='absolute';links.style.top='70px';links.style.left='0';links.style.right='0';links.style.background='rgba(7,7,9,0.98)';links.style.padding='2rem';links.style.borderBottom='1px solid rgba(139,47,201,0.2)';}
+});
+</script>
+
+</body>
+</html>
