@@ -41,6 +41,8 @@ nav.scrolled{background:rgba(7,7,9,0.96);border-bottom:1px solid rgba(139,47,201
 .nav-links a:hover{opacity:1;color:var(–purple-light);}
 .nav-cta{font-family:‘Barlow Condensed’,sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(–white);background:var(–purple);padding:.65rem 1.6rem;transition:background .2s,transform .2s;display:inline-block;}
 .nav-cta:hover{background:var(–purple-light);transform:translateY(-2px);}
+.nav-cta.nav-cta-outline{background:transparent;border:1px solid rgba(180,79,255,.4);color:var(–purple-light);margin-right:.5rem;}
+.nav-cta.nav-cta-outline:hover{background:rgba(139,47,201,.1);border-color:var(–purple-light);}
 .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
 .nav-hamburger span{display:block;width:24px;height:2px;background:var(–white);transition:.3s;}
 
@@ -69,6 +71,14 @@ nav.scrolled{background:rgba(7,7,9,0.96);border-bottom:1px solid rgba(139,47,201
 .btn-purple span{position:relative;z-index:1;}
 .btn-outline{font-family:‘Barlow Condensed’,sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(–white);border:1px solid rgba(242,238,248,.25);padding:1rem 2.6rem;display:inline-block;transition:border-color .2s,color .2s,transform .2s;}
 .btn-outline:hover{border-color:var(–purple-light);color:var(–purple-light);transform:translateY(-3px);}
+/* AI TOOL BUTTON */
+.btn-ai{font-family:‘Barlow Condensed’,sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(–purple-light);border:1px solid rgba(180,79,255,.4);padding:1rem 2.6rem;display:inline-flex;align-items:center;gap:.6rem;transition:border-color .2s,color .2s,transform .2s,background .2s,box-shadow .2s;position:relative;overflow:hidden;}
+.btn-ai::before{content:’’;position:absolute;inset:0;background:linear-gradient(135deg,rgba(139,47,201,.15),rgba(180,79,255,.08));opacity:0;transition:opacity .3s;}
+.btn-ai:hover{border-color:var(–purple-light);color:var(–white);transform:translateY(-3px);box-shadow:0 0 30px rgba(180,79,255,.25);}
+.btn-ai:hover::before{opacity:1;}
+.btn-ai span{position:relative;z-index:1;}
+.btn-ai .ai-dot{width:7px;height:7px;background:var(–purple-light);border-radius:50%;position:relative;z-index:1;animation:aiPulse 2s ease-in-out infinite;flex-shrink:0;}
+@keyframes aiPulse{0%,100%{box-shadow:0 0 0 0 rgba(180,79,255,.5);}50%{box-shadow:0 0 0 5px rgba(180,79,255,0);}}
 .hero-scroll{position:absolute;bottom:2.5rem;left:4rem;z-index:10;display:flex;align-items:center;gap:.9rem;font-family:‘Barlow Condensed’,sans-serif;font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(242,238,248,.25);opacity:0;animation:fadeUp 1s ease 1.2s forwards;}
 .scroll-bar{width:40px;height:1px;background:rgba(242,238,248,.12);overflow:hidden;position:relative;}
 .scroll-bar::after{content:’’;position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(–purple-light);animation:scan 2.2s ease-in-out 1.8s infinite;}
@@ -250,7 +260,10 @@ footer{padding:3rem 2rem 2rem;}
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
-  <a href="#pricing" class="nav-cta">Get Started</a>
+  <div style="display:flex;align-items:center;gap:.6rem;">
+    <a href="ad-strategy-tool.html" class="nav-cta nav-cta-outline">⚡ Free Ad Strategy</a>
+    <a href="#pricing" class="nav-cta">Get Started</a>
+  </div>
   <div class="nav-hamburger" id="hamburger">
     <span></span><span></span><span></span>
   </div>
@@ -276,6 +289,7 @@ footer{padding:3rem 2rem 2rem;}
     <div class="hero-actions">
       <a href="#pricing" class="btn-purple"><span>View Plans</span></a>
       <a href="#about" class="btn-outline">Learn More</a>
+      <a href="ad-strategy-tool.html" class="btn-ai"><span class="ai-dot"></span><span>Free Ad Strategy</span></a>
     </div>
   </div>
   <div class="hero-scroll"><div class="scroll-bar"></div>Scroll to Explore</div>
@@ -537,7 +551,10 @@ footer{padding:3rem 2rem 2rem;}
   <div class="cta-banner-content">
     <h2 class="cta-banner-title">STOP PLAYING<br>SMALL.</h2>
     <p class="cta-banner-sub">Your competitors are scaling while you're standing still. It's time to make your move.</p>
-    <a href="#pricing" class="btn-dark">Choose Your Plan</a>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="#pricing" class="btn-dark">Choose Your Plan</a>
+      <a href="ad-strategy-tool.html" style="font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;background:transparent;color:var(--white);padding:1.1rem 3rem;display:inline-block;border:1px solid rgba(255,255,255,.3);transition:border-color .2s,transform .2s;" onmouseover="this.style.borderColor='rgba(255,255,255,.7)';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(255,255,255,.3)';this.style.transform='translateY(0)'">⚡ Free Ad Strategy</a>
+    </div>
   </div>
 </div>
 
@@ -565,6 +582,7 @@ footer{padding:3rem 2rem 2rem;}
         <li><a href="#about">About Us</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#faq">FAQ</a></li>
+        <li><a href="ad-strategy-tool.html">Free Ad Strategy</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -614,6 +632,195 @@ document.getElementById('hamburger').addEventListener('click',()=>{
   links.style.display=visible?'none':'flex';
   if(!visible){links.style.flexDirection='column';links.style.position='absolute';links.style.top='70px';links.style.left='0';links.style.right='0';links.style.background='rgba(7,7,9,0.98)';links.style.padding='2rem';links.style.borderBottom='1px solid rgba(139,47,201,0.2)';}
 });
+</script>
+
+<script>
+// GAME OF POWER — Lightning Engine
+(function() {
+  const canvas = document.createElement('canvas');
+  canvas.id = 'lightning-canvas';
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2;opacity:0.7;';
+  document.body.insertBefore(canvas, document.body.firstChild);
+
+  const ctx = canvas.getContext('2d');
+  let W, H;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Lightning bolt generator
+  function buildBolt(x1, y1, x2, y2, roughness, branches) {
+    const points = [{x: x1, y: y1}];
+    function subdivide(ax, ay, bx, by, depth) {
+      if (depth === 0) { points.push({x: bx, y: by}); return; }
+      const mx = (ax + bx) / 2 + (Math.random() - 0.5) * roughness * depth * 18;
+      const my = (ay + by) / 2 + (Math.random() - 0.5) * roughness * depth * 6;
+      subdivide(ax, ay, mx, my, depth - 1);
+      subdivide(mx, my, bx, by, depth - 1);
+    }
+    subdivide(x1, y1, x2, y2, 5);
+    return points;
+  }
+
+  function drawBolt(points, alpha, width, color) {
+    if (points.length < 2) return;
+    // Outer glow
+    ctx.save();
+    ctx.shadowBlur = 30;
+    ctx.shadowColor = color;
+    ctx.strokeStyle = color.replace('1)', `${alpha * 0.4})`);
+    ctx.lineWidth = width * 4;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y);
+    ctx.stroke();
+    // Core bolt
+    ctx.shadowBlur = 15;
+    ctx.strokeStyle = `rgba(240,220,255,${alpha})`;
+    ctx.lineWidth = width;
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Flash overlay
+  function flashScreen(alpha, color) {
+    ctx.save();
+    ctx.fillStyle = color.replace('1)', `${alpha})`);
+    ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+  }
+
+  // Active strikes
+  let strikes = [];
+  let lastStrike = 0;
+
+  function createStrike() {
+    // Pick random strike style
+    const style = Math.random();
+    let x1, y1, x2, y2;
+
+    if (style < 0.4) {
+      // Top-down bolt
+      x1 = Math.random() * W;
+      y1 = 0;
+      x2 = x1 + (Math.random() - 0.5) * 300;
+      y2 = H * (0.3 + Math.random() * 0.7);
+    } else if (style < 0.7) {
+      // Side bolt
+      x1 = Math.random() < 0.5 ? 0 : W;
+      y1 = Math.random() * H * 0.6;
+      x2 = x1 === 0 ? W * (0.2 + Math.random() * 0.4) : W * (0.4 + Math.random() * 0.4);
+      y2 = y1 + (Math.random() - 0.3) * 200;
+    } else {
+      // Sky-to-ground full bolt
+      x1 = W * (0.1 + Math.random() * 0.8);
+      y1 = 0;
+      x2 = x1 + (Math.random() - 0.5) * 200;
+      y2 = H;
+    }
+
+    const color = Math.random() < 0.6
+      ? 'rgba(180,79,255,1)'   // purple
+      : 'rgba(139,47,201,1)';  // deep purple
+
+    const points = buildBolt(x1, y1, x2, y2, 1.2, 0);
+
+    // Generate branches
+    const branchData = [];
+    const numBranches = Math.floor(Math.random() * 4) + 2;
+    for (let i = 0; i < numBranches; i++) {
+      const startIdx = Math.floor(points.length * (0.2 + Math.random() * 0.6));
+      const sp = points[startIdx];
+      const angle = Math.random() * Math.PI * 2;
+      const len = 60 + Math.random() * 150;
+      const bx2 = sp.x + Math.cos(angle) * len;
+      const by2 = sp.y + Math.sin(angle) * len;
+      branchData.push({
+        points: buildBolt(sp.x, sp.y, bx2, by2, 1.0, 0),
+        width: 0.6 + Math.random() * 0.8
+      });
+    }
+
+    strikes.push({
+      points,
+      branches: branchData,
+      color,
+      phase: 0, // 0=flash-in 1=hold 2=fade
+      alpha: 0,
+      width: 1.5 + Math.random() * 2,
+      flashAlpha: 0,
+      duration: 80 + Math.random() * 120,
+      born: performance.now()
+    });
+  }
+
+  let lastFrame = 0;
+  function animate(now) {
+    requestAnimationFrame(animate);
+    const dt = now - lastFrame;
+    lastFrame = now;
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Trigger new strike
+    const interval = 1800 + Math.random() * 2200;
+    if (now - lastStrike > interval) {
+      lastStrike = now;
+      const count = Math.random() < 0.3 ? 2 : 1; // sometimes double strike
+      for (let i = 0; i < count; i++) {
+        setTimeout(createStrike, i * 120);
+      }
+    }
+
+    // Draw active strikes
+    strikes = strikes.filter(s => {
+      const age = now - s.born;
+      const fadeIn = 40;
+      const hold = fadeIn + s.duration * 0.3;
+      const fadeOut = hold + s.duration * 0.7;
+
+      if (age < fadeIn) {
+        s.alpha = age / fadeIn;
+        s.flashAlpha = (age / fadeIn) * 0.08;
+      } else if (age < hold) {
+        s.alpha = 1;
+        s.flashAlpha = 0.04;
+        // Flicker
+        if (Math.random() < 0.15) s.alpha = Math.random() * 0.4 + 0.6;
+      } else if (age < fadeOut) {
+        s.alpha = 1 - (age - hold) / (fadeOut - hold);
+        s.flashAlpha = 0;
+      } else {
+        return false;
+      }
+
+      // Screen flash
+      if (s.flashAlpha > 0) flashScreen(s.flashAlpha, s.color);
+
+      // Main bolt
+      drawBolt(s.points, s.alpha, s.width, s.color);
+
+      // Branches
+      s.branches.forEach(b => {
+        drawBolt(b.points, s.alpha * 0.6, b.width, s.color);
+      });
+
+      return true;
+    });
+  }
+
+  requestAnimationFrame(animate);
+})();
+
 </script>
 
 </body>
