@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Game of Power LLC — AI-Powered Marketing Agency</title>
+  <meta name="description" content="AI-powered content creation, digital marketing strategy, and brand development. Game of Power LLC — Louisiana's authority-driven marketing agency."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@400;600;900&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+    :root{
+      --black:   #050505;
+      --deep:    #080C10;
+      --surface: #0D1117;
+      --surf2:   #131B24;
+      --surf3:   #1A2535;
+      --gold:    #C9A84C;
+      --gold2:   #E8C96A;
+      --gold3:   #8A6220;
+      --ice:     #D4EEFF;
+      --bolt:    #FFFBE6;
+      --blue:    #4A9FFF;
+      --text:    #E8DFC8;
+      --muted:   #4A5A6A;
+      --border:  rgba(201,168,76,0.12);
+      --r:       3px;
+    }
+
+    html{scroll-behavior:smooth}
+
+    body{
+      background:var(--black);
+      color:var(--text);
+      font-family:'Montserrat',sans-serif;
+      font-weight:300;
+      line-height:1.7;
+      overflow-x:hidden;
+    }
+
+    ::-webkit-scrollbar{width:3px}
+    ::-webkit-scrollbar-track{background:var(--black)}
+    ::-webkit-scrollbar-thumb{background:var(--gold3)}
+
+    /* ═══════════════════════════════════════
+       LIGHTNING CANVAS
+    ═══════════════════════════════════════ */
+    #lightning-canvas{
+      position:fixed;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      opacity:0.55;
+    }
+
+    /* Storm atmosphere */
+    .storm-bg{
+      position:fixed;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      background:
+        radial-gradient(ellipse 100% 60% at 50% 0%,  rgba(20,40,80,0.5)   0%, transparent 65%),
+        radial-gradient(ellipse 60%  80% at 80% 30%, rgba(74,159,255,0.04) 0%, transparent 55%),
+        radial-gradient(ellipse 50%  70% at 20% 70%, rgba(201,168,76,0.03) 0%, transparent 55%);
+    }
+
+    /* Cloud wisps */
+    .cloud{
+      position:fixed;
+      pointer-events:none;
+      z-index:0;
+      border-radius:50%;
+      filter:blur(60px);
+      opacity:0;
+      animation:cloudDrift var(--cd,40s) ease-in-out infinite;
+    }
+    .cloud-1{width:600px;height:200px;background:rgba(20,40,90,0.3);top:-60px;left:-100px;animation-delay:0s}
+    .cloud-2{width:800px;height:250px;background:rgba(10,25,60,0.25);top:-80px;right:-150px;animation-delay:-15s}
+    .cloud-3{width:500px;height:180px;background:rgba(15,35,75,0.2);top:100px;left:30%;animation-delay:-8s}
+
+    @keyframes cloudDrift{
+      0%,100%{opacity:0.6;transform:translateX(0)}
+      50%{opacity:0.9;transform:translateX(30px)}
+    }
+
+    /* Rain effect */
+    .rain-canvas{
+      position:fixed;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      opacity:0.12;
+    }
+
+    /* ═══════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════ */
+    nav{
+      position:fixed;
+      top:0;left:0;right:0;
+      z-index:200;
+      height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 52px;
+      background:rgba(5,5,5,0.85);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
+    }
+
+    .nav-logo{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+    }
+
+    /* LOGO MARK SVG */
+    .logo-svg{width:42px;height:42px;flex-shrink:0}
+
+    .logo-wordmark{
+      font-family:'Bebas Neue',sans-serif;
+      font-size:1.3rem;
+      letter-spacing:0.12em;
+      color:var(--gold);
+      line-height:1;
+    }
+
+    .logo-wordmark span{color:rgba(255,255,255,0.5)}
+
+    .nav-links{display:flex;gap:32px;list-style:none;align-items:center}
+
+    .nav-links a{
+      font-size:0.68rem;
+      font-weight:500;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      color:var(--muted);
+      text-decoration:none;
+      transition:color 0.2s;
+    }
+
+    .nav-links a:hover{color:var(--gold)}
+
+    .nav-cta{
+      background:var(--gold)!important;
+      color:var(--black)!important;
+      padding:9px 22px;
+      border-radius:var(--r);
+      font-weight:600!important;
+      transition:background 0.2s,transform 0.15s!important;
+    }
+
+    .nav-cta:hover{background:var(--gold2)!important;transform:translateY(-1px)}
+
+    .nav-toggle{
+      display:none;
+      flex-direction:column;
+      gap:5px;
+      cursor:pointer;
+      background:none;
+      border:none;
+    }
+
+    .nav-toggle span{display:block;width:22px;height:1px;background:var(--gold)}
+
+    /* ═══════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════ */
+    #hero{
+      position:relative;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      padding:140px 52px 100px;
+      z-index:1;
+      overflow:hidden;
+    }
+
+    /* Hero lightning flash overlay */
+    #hero::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:rgba(200,210,255,0);
+      pointer-events:none;
+      z-index:2;
+      animation:flashPulse 8s ease-in-out infinite;
+    }
+
+    @keyframes flashPulse{
+      0%,100%{background:rgba(200,210,255,0)}
+      12%{background:rgba(200,210,255,0.015)}
+      12.3%{background:rgba(200,210,255,0)}
+      12.6%{background:rgba(200,210,255,0.01)}
+      13%{background:rgba(200,210,255,0)}
+      45%{background:rgba(200,210,255,0)}
+      45.2%{background:rgba(200,210,255,0.02)}
+      45.5%{background:rgba(200,210,255,0)}
+    }
+
+    /* Big hero logo */
+    .hero-logo-wrap{
+      display:flex;
+      align-items:center;
+      gap:28px;
+      margin-bottom:40px;
+      opacity:0;
+      animation:heroFade 1s ease forwards 0.3s;
+    }
+
+    .hero-logo-svg{
+      width:100px;
+      height:100px;
+      filter:drop-shadow(0 0 30px rgba(201,168,76,0.5)) drop-shadow(0 0 60px rgba(201,168,76,0.2));
+      animation:logoPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes logoPulse{
+      0%,100%{filter:drop-shadow(0 0 20px rgba(201,168,76,0.5)) drop-shadow(0 0 40px rgba(201,168,76,0.2))}
+      50%{filter:drop-shadow(0 0 40px rgba(201,168,76,0.8)) drop-shadow(0 0 80px rgba(201,168,76,0.3))}
+    }
+
+    .hero-logo-text{
+      font-family:'Bebas Neue',sans-serif;
+      font-size:clamp(2rem,4vw,3.5rem);
+      letter-spacing:0.15em;
+      color:var(--gold);
+      line-height:1.05;
+    }
+
+    .hero-logo-text em{
+      display:block;
+      font-style:normal;
+      color:rgba(255,255,255,0.35);
+      font-size:0.55em;
+      letter-spacing:0.3em;
+    }
+
+    .hero-eyebrow{
+      font-size:0.6rem;
+      font-weight:600;
+      letter-spacing:0.35em;
+      text-transform:uppercase;
+      color:var(--gold);
+      margin-bottom:20px;
+      opacity:0;
+      animation:heroFade 0.8s ease forwards 0.6s;
+    }
+
+    .hero-headline{
+      font-family:'Cinzel',serif;
+      font-size:clamp(3rem,8vw,8rem);
+      font-weight:900;
+      line-height:0.95;
+      max-width:1000px;
+      opacity:0;
+      animation:heroFade 1s ease forwards 0.8s;
+    }
+
+    .hero-headline .hl-gold{color:var(--gold)}
+
+    .hero-headline .hl-outline{
+      color:transparent;
+      -webkit-text-stroke:1px rgba(201,168,76,0.45);
+    }
+
+    .hero-sub{
+      margin-top:28px;
+      max-width:520px;
+      font-size:0.9rem;
+      color:var(--muted);
+      line-height:1.9;
+      opacity:0;
+      animation:heroFade 1s ease forwards 1.1s;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:14px;
+      margin-top:44px;
+      flex-wrap:wrap;
+      opacity:0;
+      animation:heroFade 1s ease forwards 1.3s;
+    }
+
+    .btn-primary{
+      display:inline-block;
+      background:var(--gold);
+      color:var(--black);
+      font-weight:700;
+      font-size:0.68rem;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      text-decoration:none;
+      padding:16px 36px;
+      border-radius:var(--r);
+      transition:all 0.2s;
+      border:none;
+      cursor:pointer;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .btn-primary::after{
+      content:'';
+      position:absolute;
+      inset:-2px;
+      background:linear-gradient(135deg,rgba(255,255,255,0.2),transparent);
+      opacity:0;
+      transition:opacity 0.2s;
+    }
+
+    .btn-primary:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,168,76,0.3)}
+    .btn-primary:hover::after{opacity:1}
+
+    .btn-ghost{
+      display:inline-block;
+      background:transparent;
+      color:var(--text);
+      font-weight:500;
+      font-size:0.68rem;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      text-decoration:none;
+      padding:16px 36px;
+      border-radius:var(--r);
+      border:1px solid var(--border);
+      transition:border-color 0.2s,color 0.2s;
+    }
+
+    .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+
+    /* Scroll indicator */
+    .scroll-hint{
+      position:absolute;
+      bottom:40px;
+      left:52px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      opacity:0;
+      animation:heroFade 0.8s ease forwards 1.8s;
+    }
+
+    .scroll-line{
+      width:40px;
+      height:1px;
+      background:linear-gradient(90deg,var(--gold),transparent);
+    }
+
+    .scroll-label{
+      font-size:0.58rem;
+      letter-spacing:0.2em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+
+    @keyframes heroFade{
+      from{opacity:0;transform:translateY(22px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    /* ═══════════════════════════════════════
+       MARQUEE
+    ═══════════════════════════════════════ */
+    .marquee-wrap{
+      background:linear-gradient(90deg,var(--gold3),var(--gold),var(--gold3));
+      overflow:hidden;
+      padding:13px 0;
+      position:relative;
+      z-index:1;
+    }
+
+    .marquee-track{
+      display:flex;
+      animation:marquee 30s linear infinite;
+      width:max-content;
+    }
+
+    .marquee-track span{
+      font-family:'Bebas Neue',sans-serif;
+      font-size:0.88rem;
+      letter-spacing:0.22em;
+      color:var(--black);
+      padding:0 32px;
+      white-space:nowrap;
+    }
+
+    .marquee-track span::after{content:' ✦ ';opacity:0.35;margin-left:32px}
+
+    @keyframes marquee{
+      from{transform:translateX(0)}
+      to{transform:translateX(-50%)}
+    }
+
+    /* ═══════════════════════════════════════
+       SECTION BASE
+    ═══════════════════════════════════════ */
+    section{padding:120px 52px;position:relative;z-index:1}
+
+    .sec-label{
+      font-size:0.6rem;
+      font-weight:600;
+      letter-spacing:0.32em;
+      text-transform:uppercase;
+      color:var(--gold);
+      margin-bottom:14px;
+    }
+
+    .sec-title{
+      font-family:'Cinzel',serif;
+      font-size:clamp(2.2rem,4vw,4rem);
+      font-weight:900;
+      line-height:1.05;
+      max-width:640px;
+    }
+
+    .sec-title em{
+      font-style:normal;
+      color:var(--gold);
+    }
+
+    /* ═══════════════════════════════════════
+       SERVICES
+    ═══════════════════════════════════════ */
+    #services{background:var(--surface)}
+
+    .svc-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      margin-bottom:64px;
+      gap:32px;
+      flex-wrap:wrap;
+    }
+
+    .svc-intro{
+      max-width:380px;
+      font-size:0.88rem;
+      color:var(--muted);
+      line-height:1.9;
+    }
+
+    .svc-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:1px;
+      background:var(--border);
+      border:1px solid var(--border);
+    }
+
+    .svc-card{
+      background:var(--surface);
+      padding:48px 36px;
+      position:relative;
+      overflow:hidden;
+      transition:background 0.3s;
+    }
+
+    .svc-card::before{
+      content:'';
+      position:absolute;
+      bottom:0;left:0;
+      width:0;height:2px;
+      background:linear-gradient(90deg,var(--gold),var(--gold2));
+      transition:width 0.4s ease;
+    }
+
+    .svc-card:hover{background:var(--surf2)}
+    .svc-card:hover::before{width:100%}
+
+    /* Lightning bolt accent on hover */
+    .svc-card::after{
+      content:'⚡';
+      position:absolute;
+      top:16px;right:20px;
+      font-size:1.2rem;
+      opacity:0;
+      transform:scale(0.5) rotate(-15deg);
+      transition:opacity 0.3s,transform 0.3s;
+    }
+
+    .svc-card:hover::after{opacity:0.3;transform:scale(1) rotate(0deg)}
+
+    .svc-num{
+      font-family:'Bebas Neue',sans-serif;
+      font-size:0.72rem;
+      letter-spacing:0.2em;
+      color:var(--gold3);
+      margin-bottom:24px;
+    }
+
+    .svc-icon{font-size:1.8rem;display:block;margin-bottom:16px}
+
+    .svc-name{
+      font-family:'Cinzel',serif;
+      font-size:1rem;
+      font-weight:600;
+      letter-spacing:0.05em;
+      margin-bottom:12px;
+      color:var(--text);
+    }
+
+    .svc-desc{font-size:0.82rem;color:var(--muted);line-height:1.85}
+
+    /* ═══════════════════════════════════════
+       POWER STATEMENT (full-bleed divider)
+    ═══════════════════════════════════════ */
+    .power-band{
+      background:var(--deep);
+      border-top:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+      padding:80px 52px;
+      display:flex;
+      align-items:center;
+      gap:48px;
+      overflow:hidden;
+      position:relative;
+      z-index:1;
+    }
+
+    .power-band::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:radial-gradient(ellipse 60% 100% at 50% 50%,rgba(201,168,76,0.04) 0%,transparent 70%);
+    }
+
+    .power-lightning{
+      flex-shrink:0;
+      opacity:0.15;
+    }
+
+    .power-text{
+      font-family:'Cinzel',serif;
+      font-size:clamp(1.6rem,3.5vw,3.2rem);
+      font-weight:400;
+      line-height:1.4;
+      font-style:italic;
+      color:var(--text);
+    }
+
+    .power-text strong{
+      color:var(--gold);
+      font-style:normal;
+    }
+
+    /* ═══════════════════════════════════════
+       PROCESS
+    ═══════════════════════════════════════ */
+    #process{background:var(--black)}
+
+    .process-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:80px;
+      margin-top:64px;
+      align-items:center;
+    }
+
+    .process-steps{display:flex;flex-direction:column}
+
+    .p-step{
+      display:flex;
+      gap:24px;
+      padding:28px 0;
+      border-bottom:1px solid var(--border);
+      opacity:0.45;
+      transition:opacity 0.3s;
+      cursor:default;
+    }
+
+    .p-step:first-child{border-top:1px solid var(--border)}
+    .p-step:hover{opacity:1}
+
+    .p-num{
+      font-family:'Bebas Neue',sans-serif;
+      font-size:2rem;
+      color:var(--gold);
+      line-height:1;
+      min-width:44px;
+    }
+
+    .p-name{
+      font-family:'Cinzel',serif;
+      font-size:0.95rem;
+      font-weight:600;
+      margin-bottom:8px;
+      color:var(--text);
+    }
+
+    .p-desc{font-size:0.82rem;color:var(--muted);line-height:1.85}
+
+    .process-panel{
+      background:var(--surface);
+      border:1px solid var(--border);
+      padding:56px 48px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .process-panel::before{
+      content:'';
+      position:absolute;
+      top:0;left:0;right:0;
+      height:2px;
+      background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    }
+
+    /* Animated lightning in panel */
+    .panel-bolt{
+      position:absolute;
+      right:-20px;top:-20px;
+      opacity:0.06;
+      animation:boltFlicker 5s ease-in-out infinite;
+    }
+
+    @keyframes boltFlicker{
+      0%,100%{opacity:0.06}
+      10%{opacity:0.15}
+      10.5%{opacity:0.06}
+      11%{opacity:0.12}
+      11.5%{opacity:0.06}
+      60%{opacity:0.06}
+      60.3%{opacity:0.18}
+      60.6%{opacity:0.06}
+    }
+
+    .panel-quote{
+      font-family:'Cinzel',serif;
+      font-size:1.4rem;
+      font-style:italic;
+      font-weight:400;
+      line-height:1.55;
+      color:var(--text);
+      margin-bottom:28px;
+    }
+
+    .panel-quote strong{color:var(--gold);font-style:normal}
+
+    .panel-author{
+      font-size:0.62rem;
+      letter-spacing:0.22em;
+      text-transform:uppercase;
+      color:var(--gold);
+    }
+
+    /* ═══════════════════════════════════════
+       PRICING
+    ═══════════════════════════════════════ */
+    #pricing{background:var(--surface)}
+
+    .pricing-head{text-align:center;margin-bottom:64px}
+    .pricing-head .sec-label{display:flex;justify-content:center}
+    .pricing-head .sec-title{margin:0 auto;text-align:center}
+
+    .pricing-sub{
+      margin:18px auto 0;
+      max-width:480px;
+      text-align:center;
+      font-size:0.88rem;
+      color:var(--muted);
+      line-height:1.85;
+    }
+
+    .pricing-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:20px;
+      max-width:1080px;
+      margin:0 auto;
+    }
+
+    .p-card{
+      background:var(--surf2);
+      border:1px solid var(--border);
+      padding:44px 32px;
+      display:flex;
+      flex-direction:column;
+      position:relative;
+      overflow:hidden;
+      transition:border-color 0.3s,transform 0.3s;
+    }
+
+    .p-card::after{
+      content:'';
+      position:absolute;
+      top:0;left:0;right:0;
+      height:2px;
+      background:linear-gradient(90deg,transparent,var(--gold),transparent);
+      opacity:0;
+      transition:opacity 0.3s;
+    }
+
+    .p-card:hover{border-color:rgba(201,168,76,0.3);transform:translateY(-4px)}
+    .p-card:hover::after{opacity:1}
+
+    .p-card.featured{
+      border-color:rgba(201,168,76,0.35);
+      background:var(--surf3);
+    }
+
+    .p-card.featured::after{opacity:1}
+
+    .p-badge{
+      position:absolute;
+      top:-1px;left:50%;
+      transform:translateX(-50%);
+      background:var(--gold);
+      color:var(--black);
+      font-size:0.55rem;
+      font-weight:700;
+      letter-spacing:0.2em;
+      padding:4px 14px;
+      white-space:nowrap;
+    }
+
+    .p-tier{
+      font-size:0.58rem;
+      font-weight:600;
+      letter-spacing:0.25em;
+      text-transform:uppercase;
+      color:var(--gold);
+      margin-bottom:8px;
+    }
+
+    .p-name{
+      font-family:'Cinzel',serif;
+      font-size:1.3rem;
+      font-weight:700;
+      margin-bottom:22px;
+      color:var(--text);
+    }
+
+    .p-price{display:flex;align-items:baseline;gap:4px;margin-bottom:5px}
+
+    .p-amount{
+      font-family:'Bebas Neue',sans-serif;
+      font-size:3rem;
+      color:var(--gold);
+      line-height:1;
+    }
+
+    .p-period{font-size:0.72rem;color:var(--muted)}
+
+    .p-note{font-size:0.68rem;color:var(--muted);margin-bottom:24px;min-height:18px}
+
+    .p-divider{height:1px;background:var(--border);margin-bottom:22px}
+
+    .p-features{list-style:none;flex:1;margin-bottom:28px}
+
+    .p-features li{
+      font-size:0.82rem;
+      color:var(--muted);
+      padding:7px 0;
+      border-bottom:1px solid rgba(255,255,255,0.03);
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      line-height:1.5;
+    }
+
+    .p-features li::before{
+      content:'⚡';
+      font-size:0.65rem;
+      flex-shrink:0;
+      margin-top:2px;
+      opacity:0.5;
+    }
+
+    .btn-tier{
+      display:block;
+      text-align:center;
+      text-decoration:none;
+      font-weight:700;
+      font-size:0.65rem;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      padding:14px 20px;
+      border-radius:var(--r);
+      transition:all 0.2s;
+    }
+
+    .btn-outline{
+      border:1px solid rgba(201,168,76,0.3);
+      color:var(--gold);
+      background:transparent;
+    }
+
+    .btn-outline:hover{border-color:var(--gold);background:rgba(201,168,76,0.07);box-shadow:0 0 20px rgba(201,168,76,0.1)}
+
+    .btn-solid{
+      background:var(--gold);
+      color:var(--black);
+      border:1px solid var(--gold);
+    }
+
+    .btn-solid:hover{background:var(--gold2);border-color:var(--gold2);transform:translateY(-1px);box-shadow:0 6px 24px rgba(201,168,76,0.25)}
+
+    /* ═══════════════════════════════════════
+       FAQ
+    ═══════════════════════════════════════ */
+    #faq{background:var(--black)}
+
+    .faq-layout{
+      display:grid;
+      grid-template-columns:1fr 2fr;
+      gap:80px;
+      margin-top:64px;
+      align-items:start;
+    }
+
+    .faq-side p{font-size:0.85rem;color:var(--muted);line-height:1.85;margin:14px 0 28px}
+
+    .faq-list{display:flex;flex-direction:column}
+    .faq-item{border-top:1px solid var(--border)}
+    .faq-item:last-child{border-bottom:1px solid var(--border)}
+
+    .faq-q{
+      width:100%;background:none;border:none;
+      padding:22px 0;
+      display:flex;justify-content:space-between;align-items:center;gap:20px;
+      cursor:pointer;text-align:left;
+    }
+
+    .faq-qt{font-size:0.88rem;font-weight:500;color:var(--text);letter-spacing:0.02em}
+    .faq-ic{font-size:1.4rem;color:var(--gold);transition:transform 0.3s;flex-shrink:0;font-family:'Bebas Neue',sans-serif}
+    .faq-item.open .faq-ic{transform:rotate(45deg)}
+    .faq-a{display:none;padding:0 0 22px;font-size:0.83rem;color:var(--muted);line-height:1.9;max-width:620px}
+    .faq-item.open .faq-a{display:block}
+
+    /* ═══════════════════════════════════════
+       CTA
+    ═══════════════════════════════════════ */
+    #cta{
+      background:linear-gradient(160deg,var(--deep) 0%,var(--surf2) 100%);
+      border-top:1px solid var(--border);
+      padding:120px 52px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    #cta::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(201,168,76,0.06) 0%,transparent 65%);
+    }
+
+    #cta h2{
+      font-family:'Cinzel',serif;
+      font-size:clamp(2.5rem,5vw,5.5rem);
+      font-weight:900;
+      color:var(--text);
+      margin-bottom:16px;
+    }
+
+    #cta h2 span{color:var(--gold)}
+
+    #cta p{
+      font-size:0.92rem;
+      color:var(--muted);
+      max-width:440px;
+      margin:0 auto 40px;
+      line-height:1.85;
+    }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    footer{
+      background:var(--surface);
+      border-top:1px solid var(--border);
+      padding:64px 52px 36px;
+      position:relative;
+      z-index:1;
+    }
+
+    .ft-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      margin-bottom:48px;
+      gap:40px;
+      flex-wrap:wrap;
+    }
+
+    .ft-tagline{font-size:0.8rem;color:var(--muted);max-width:240px;line-height:1.75;margin-top:10px}
+
+    .ft-nav h4{
+      font-size:0.58rem;
+      letter-spacing:0.28em;
+      text-transform:uppercase;
+      color:var(--gold);
+      margin-bottom:14px;
+    }
+
+    .ft-nav ul{list-style:none}
+    .ft-nav li{margin-bottom:9px}
+
+    .ft-nav a{font-size:0.8rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
+    .ft-nav a:hover{color:var(--text)}
+
+    .ft-bottom{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding-top:28px;
+      border-top:1px solid var(--border);
+      flex-wrap:wrap;
+      gap:12px;
+    }
+
+    .ft-copy{font-size:0.7rem;color:var(--muted);letter-spacing:0.06em}
+    .ft-state{font-size:0.65rem;color:var(--gold3);letter-spacing:0.14em;text-transform:uppercase}
+
+    /* ═══════════════════════════════════════
+       REVEAL
+    ═══════════════════════════════════════ */
+    .reveal{
+      opacity:0;
+      transform:translateY(28px);
+      transition:opacity 0.75s ease,transform 0.75s ease;
+    }
+
+    .reveal.visible{opacity:1;transform:translateY(0)}
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media(max-width:960px){
+      nav{padding:0 24px}
+      .nav-links{display:none}
+      .nav-toggle{display:flex}
+
+      .nav-links.open{
+        display:flex;flex-direction:column;
+        position:fixed;top:72px;left:0;right:0;
+        background:var(--surface);
+        border-bottom:1px solid var(--border);
+        padding:28px 24px;gap:20px;z-index:199;
+      }
+
+      section{padding:80px 24px}
+      #hero{padding:120px 24px 80px}
+      .svc-grid{grid-template-columns:1fr}
+      .pricing-grid{grid-template-columns:1fr;max-width:420px}
+      .process-grid{grid-template-columns:1fr;gap:48px}
+      .faq-layout{grid-template-columns:1fr;gap:36px}
+      .power-band{padding:56px 24px;flex-direction:column;text-align:center}
+      .hero-logo-wrap{flex-direction:column;align-items:flex-start;gap:16px}
+      .hero-logo-svg{width:72px;height:72px}
+      footer{padding:48px 24px 28px}
+      .ft-top{flex-direction:column}
+      .scroll-hint{left:24px}
+    }
+
+    @media(max-width:600px){
+      .pricing-grid{max-width:100%}
+      .hero-actions{flex-direction:column}
+    }
+  </style>
+
+</head>
+<body>
+
+<!-- ── ATMOSPHERE ── -->
+
+<div class="storm-bg"></div>
+<div class="cloud cloud-1"></div>
+<div class="cloud cloud-2"></div>
+<div class="cloud cloud-3"></div>
+<canvas id="lightning-canvas"></canvas>
+<canvas class="rain-canvas" id="rain-canvas"></canvas>
+
+<!-- ── NAV ── -->
+
+<nav>
+  <a href="#hero" class="nav-logo">
+    <!-- COMPACT LOGO MARK -->
+    <svg class="logo-svg" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="shieldGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#E8C96A"/>
+          <stop offset="100%" stop-color="#8A6220"/>
+        </linearGradient>
+        <linearGradient id="boltGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#FFFBE6"/>
+          <stop offset="100%" stop-color="#C9A84C"/>
+        </linearGradient>
+        <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="1.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- Shield body -->
+      <path d="M21 3L5 9.5V21.5C5 29.5 12 36.5 21 39C30 36.5 37 29.5 37 21.5V9.5L21 3Z"
+        fill="url(#shieldGrad)" opacity="0.9"/>
+      <!-- Shield border -->
+      <path d="M21 3L5 9.5V21.5C5 29.5 12 36.5 21 39C30 36.5 37 29.5 37 21.5V9.5L21 3Z"
+        stroke="#E8C96A" stroke-width="0.8" fill="none" opacity="0.6"/>
+      <!-- Inner shield -->
+      <path d="M21 7.5L9 12.5V21.8C9 28 14.5 33.5 21 35.5C27.5 33.5 33 28 33 21.8V12.5L21 7.5Z"
+        fill="rgba(0,0,0,0.35)"/>
+      <!-- Lightning bolt center -->
+      <path d="M24 11L17 22H21.5L18 31L26 19H21L24 11Z"
+        fill="url(#boltGrad)" filter="url(#glow)"/>
+      <!-- Crown points -->
+      <circle cx="21" cy="5.5" r="1.5" fill="#E8C96A" opacity="0.9"/>
+      <circle cx="13" cy="7" r="1.2" fill="#C9A84C" opacity="0.7"/>
+      <circle cx="29" cy="7" r="1.2" fill="#C9A84C" opacity="0.7"/>
+    </svg>
+    <div class="logo-wordmark">
+      Game of Power<span> LLC</span>
+    </div>
+  </a>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#pricing" class="nav-cta">Get Started</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ── HERO ── -->
+
+<section id="hero">
+  <div class="hero-logo-wrap">
+    <!-- HERO LOGO MARK - Large -->
+    <svg class="hero-logo-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="hShieldG" x1="0" y1="0" x2="0.5" y2="1">
+          <stop offset="0%" stop-color="#E8C96A"/>
+          <stop offset="50%" stop-color="#C9A84C"/>
+          <stop offset="100%" stop-color="#7A5018"/>
+        </linearGradient>
+        <linearGradient id="hBoltG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#FFFFFF"/>
+          <stop offset="40%" stop-color="#FFFBE6"/>
+          <stop offset="100%" stop-color="#C9A84C"/>
+        </linearGradient>
+        <linearGradient id="hCrownG" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#F0D878"/>
+          <stop offset="100%" stop-color="#C9A84C"/>
+        </linearGradient>
+        <filter id="hGlow" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="boltGlow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="4" result="blur"/>
+          <feColorMatrix in="blur" type="matrix"
+            values="1 0.8 0 0 0  0.8 0.6 0 0 0  0 0 0.2 0 0  0 0 0 0.8 0"/>
+          <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="shieldShadow">
+          <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="rgba(0,0,0,0.6)"/>
+        </filter>
+      </defs>
+
+```
+  <!-- Shield glow background -->
+  <ellipse cx="60" cy="65" rx="44" ry="40" fill="rgba(201,168,76,0.08)" filter="url(#hGlow)"/>
+
+  <!-- Main shield body -->
+  <path d="M60 8L16 26V58C16 82 35 102 60 110C85 102 104 82 104 58V26L60 8Z"
+    fill="url(#hShieldG)" filter="url(#shieldShadow)"/>
+
+  <!-- Shield edge highlight -->
+  <path d="M60 8L16 26V58C16 82 35 102 60 110C85 102 104 82 104 58V26L60 8Z"
+    stroke="rgba(240,216,120,0.5)" stroke-width="1.5" fill="none"/>
+
+  <!-- Inner shield panel -->
+  <path d="M60 18L26 32V57C26 76 41 93 60 100C79 93 94 76 94 57V32L60 18Z"
+    fill="rgba(8,12,16,0.5)"/>
+
+  <!-- Inner shield border -->
+  <path d="M60 18L26 32V57C26 76 41 93 60 100C79 93 94 76 94 57V32L60 18Z"
+    stroke="rgba(201,168,76,0.2)" stroke-width="0.8" fill="none"/>
+
+  <!-- Crown base on shield top -->
+  <path d="M42 30 L42 24 L50 30 L60 20 L70 30 L78 24 L78 30 Z"
+    fill="url(#hCrownG)" opacity="0.95"/>
+  <!-- Crown gems -->
+  <circle cx="42" cy="24" r="2.5" fill="#F0D878"/>
+  <circle cx="60" cy="19" r="3" fill="#FFF8E0"/>
+  <circle cx="78" cy="24" r="2.5" fill="#F0D878"/>
+
+  <!-- LIGHTNING BOLT -->
+  <path d="M68 36L52 62H61L54 88L76 56H65L68 36Z"
+    fill="url(#hBoltG)" filter="url(#boltGlow)"/>
+
+  <!-- Bolt inner highlight -->
+  <path d="M65 40L53 62H61L55 82L72 58H63L65 40Z"
+    fill="rgba(255,252,230,0.3)"/>
+
+  <!-- Corner ornaments -->
+  <circle cx="30" cy="26" r="2" fill="#C9A84C" opacity="0.6"/>
+  <circle cx="90" cy="26" r="2" fill="#C9A84C" opacity="0.6"/>
+  <line x1="30" y1="28" x2="30" y2="36" stroke="#C9A84C" stroke-width="0.8" opacity="0.3"/>
+  <line x1="90" y1="28" x2="90" y2="36" stroke="#C9A84C" stroke-width="0.8" opacity="0.3"/>
+</svg>
+
+<div class="hero-logo-text">
+  Game of Power
+  <em>Louisiana · Est. 2025</em>
+</div>
+```
+
+  </div>
+
+  <p class="hero-eyebrow">AI-Powered Marketing Agency</p>
+  <h1 class="hero-headline">
+    <span class="hl-outline">Seize</span><br>
+    <span class="hl-gold">The Power.</span>
+  </h1>
+  <p class="hero-sub">Game of Power LLC turns brands into market forces. We deploy AI-driven content, precision digital advertising, and bold brand strategy to make your business impossible to ignore.</p>
+  <div class="hero-actions">
+    <a href="#pricing" class="btn-primary">View Pricing</a>
+    <a href="#services" class="btn-ghost">Our Services</a>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span class="scroll-label">Scroll</span>
+  </div>
+</section>
+
+<!-- ── MARQUEE ── -->
+
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Brand Strategy</span><span>AI Content</span><span>Digital Ads</span>
+    <span>Social Media</span><span>Lead Generation</span><span>Growth Retainer</span>
+    <span>Authority Building</span><span>Conversion Funnels</span><span>Brand Identity</span>
+    <span>Brand Strategy</span><span>AI Content</span><span>Digital Ads</span>
+    <span>Social Media</span><span>Lead Generation</span><span>Growth Retainer</span>
+    <span>Authority Building</span><span>Conversion Funnels</span><span>Brand Identity</span>
+  </div>
+</div>
+
+<!-- ── SERVICES ── -->
+
+<section id="services">
+  <div class="svc-header reveal">
+    <div>
+      <p class="sec-label">What We Do</p>
+      <h2 class="sec-title">Built to <em>Dominate</em></h2>
+    </div>
+    <p class="svc-intro">Every service we offer is engineered to move the needle — from visibility to revenue, from unknown to undeniable.</p>
+  </div>
+  <div class="svc-grid reveal">
+    <div class="svc-card">
+      <p class="svc-num">01</p>
+      <span class="svc-icon">⚡</span>
+      <h3 class="svc-name">Brand Strategy & Identity</h3>
+      <p class="svc-desc">We build brand systems that command attention — positioning, visual identity, messaging architecture, and competitive differentiation.</p>
+    </div>
+    <div class="svc-card">
+      <p class="svc-num">02</p>
+      <span class="svc-icon">🤖</span>
+      <h3 class="svc-name">AI-Powered Content</h3>
+      <p class="svc-desc">High-volume, high-quality content at machine speed. Blog posts, social copy, email sequences, and ad creative — all aligned to your brand voice.</p>
+    </div>
+    <div class="svc-card">
+      <p class="svc-num">03</p>
+      <span class="svc-icon">📈</span>
+      <h3 class="svc-name">Digital Marketing & Ads</h3>
+      <p class="svc-desc">Meta, Google, TikTok — we manage paid campaigns that convert. Data-driven targeting, relentless optimization, and transparent reporting.</p>
+    </div>
+    <div class="svc-card">
+      <p class="svc-num">04</p>
+      <span class="svc-icon">📱</span>
+      <h3 class="svc-name">Social Media Management</h3>
+      <p class="svc-desc">Consistent presence, strategic content calendars, and community engagement across every platform your audience actually uses.</p>
+    </div>
+    <div class="svc-card">
+      <p class="svc-num">05</p>
+      <span class="svc-icon">🎯</span>
+      <h3 class="svc-name">Lead Generation & Funnels</h3>
+      <p class="svc-desc">End-to-end funnel design — from awareness to close. Landing pages, email automation, retargeting, and conversion rate optimization.</p>
+    </div>
+    <div class="svc-card">
+      <p class="svc-num">06</p>
+      <span class="svc-icon">🏆</span>
+      <h3 class="svc-name">Full-Service Growth Retainer</h3>
+      <p class="svc-desc">The complete package. Strategy, content, ads, and reporting — all managed for you, every month, with a dedicated team obsessed with your growth.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── POWER BAND ── -->
+
+<div class="power-band">
+  <svg class="power-lightning" width="120" height="200" viewBox="0 0 120 200" fill="none">
+    <path d="M80 10L30 100H65L40 190L110 80H70L80 10Z" fill="#C9A84C"/>
+  </svg>
+  <p class="power-text">
+    "Most agencies sell you services.<br>
+    We sell you <strong>outcomes</strong> — and we don't stop<br>until the power is yours."
+  </p>
+</div>
+
+<!-- ── PROCESS ── -->
+
+<section id="process">
+  <p class="sec-label reveal">How It Works</p>
+  <h2 class="sec-title reveal">Our <em>Process</em></h2>
+  <div class="process-grid">
+    <div class="process-steps reveal">
+      <div class="p-step">
+        <div class="p-num">01</div>
+        <div>
+          <h3 class="p-name">Audit & Discovery</h3>
+          <p class="p-desc">We dissect your brand, market, and competition. No templates. No assumptions. Deep signal only.</p>
+        </div>
+      </div>
+      <div class="p-step">
+        <div class="p-num">02</div>
+        <div>
+          <h3 class="p-name">Strategy & Positioning</h3>
+          <p class="p-desc">A precision plan built around your goals and your audience — clear priorities, defined outcomes.</p>
+        </div>
+      </div>
+      <div class="p-step">
+        <div class="p-num">03</div>
+        <div>
+          <h3 class="p-name">Build & Execute</h3>
+          <p class="p-desc">Content goes live, campaigns launch, funnels activate. We move fast without cutting corners.</p>
+        </div>
+      </div>
+      <div class="p-step">
+        <div class="p-num">04</div>
+        <div>
+          <h3 class="p-name">Optimize & Scale</h3>
+          <p class="p-desc">We watch the data, double down on what works, and eliminate what doesn't. Growth is a system, not a guess.</p>
+        </div>
+      </div>
+    </div>
+    <div class="process-panel reveal">
+      <svg class="panel-bolt" width="160" height="260" viewBox="0 0 120 200" fill="none">
+        <path d="M80 10L30 100H65L40 190L110 80H70L80 10Z" fill="#C9A84C"/>
+      </svg>
+      <p class="panel-quote">Most agencies give you a report. We give you a <strong>new operating system</strong> — and stay until it's running at full power.</p>
+      <p class="panel-author">— Game of Power LLC</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRICING ── -->
+
+<section id="pricing">
+  <div class="pricing-head reveal">
+    <p class="sec-label">Pricing</p>
+    <h2 class="sec-title">Choose Your <em>Level</em></h2>
+    <p class="pricing-sub">Three tiers built for where you are right now — and where you're going next. No hidden fees.</p>
+  </div>
+  <div class="pricing-grid reveal">
+
+```
+<div class="p-card">
+  <p class="p-tier">Tier 01</p>
+  <h3 class="p-name">The Launchpad</h3>
+  <div class="p-price"><span class="p-amount">$299</span><span class="p-period">.99 one-time</span></div>
+  <p class="p-note">Flat fee · No monthly commitment</p>
+  <div class="p-divider"></div>
+  <ul class="p-features">
+    <li>Brand audit & positioning report</li>
+    <li>AI-powered content starter pack (5 pieces)</li>
+    <li>Social media profile optimization</li>
+    <li>60-day content calendar template</li>
+    <li>Competitor landscape overview</li>
+    <li>30-minute strategy call included</li>
+  </ul>
+  <a href="https://buy.stripe.com/6oUdR92aJ2EI7tBe8M8Ra02" class="btn-tier btn-outline" target="_blank" rel="noopener">Get Started →</a>
+</div>
+
+<div class="p-card featured">
+  <div class="p-badge">Most Popular</div>
+  <p class="p-tier">Tier 02</p>
+  <h3 class="p-name">The Operator</h3>
+  <div class="p-price"><span class="p-amount">$599</span><span class="p-period">.99 / mo</span></div>
+  <p class="p-note">3-month minimum · Cancel anytime after</p>
+  <div class="p-divider"></div>
+  <ul class="p-features">
+    <li>Everything in The Launchpad</li>
+    <li>Monthly AI content production (15 pieces)</li>
+    <li>Paid ad campaign management (1 platform)</li>
+    <li>Monthly performance report & insights</li>
+    <li>Email marketing — 2 sequences/month</li>
+    <li>Social media scheduling & management</li>
+    <li>Priority email & chat support</li>
+  </ul>
+  <a href="https://buy.stripe.com/cNi5kD6qZfru3dl5Cg8Ra03" class="btn-tier btn-solid" target="_blank" rel="noopener">Get Started →</a>
+</div>
+
+<div class="p-card">
+  <p class="p-tier">Tier 03</p>
+  <h3 class="p-name">The Architect</h3>
+  <div class="p-price"><span class="p-amount">$999</span><span class="p-period">.99 / mo</span></div>
+  <p class="p-note">6-month minimum · Full-service engagement</p>
+  <div class="p-divider"></div>
+  <ul class="p-features">
+    <li>Everything in The Operator</li>
+    <li>Unlimited AI content production</li>
+    <li>Multi-platform ad management (up to 3)</li>
+    <li>Full funnel design & build-out</li>
+    <li>Lead generation system setup</li>
+    <li>Weekly strategy calls</li>
+    <li>Dedicated account manager</li>
+    <li>Brand identity refinement</li>
+  </ul>
+  <a href="https://buy.stripe.com/9B69ATcPnenqaFN5Cg8Ra04" class="btn-tier btn-outline" target="_blank" rel="noopener">Get Started →</a>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+
+<section id="faq">
+  <div class="faq-layout">
+    <div class="faq-side reveal">
+      <p class="sec-label">FAQ</p>
+      <h2 class="sec-title" style="font-size:clamp(1.8rem,3vw,3rem)">Got <em>Questions?</em></h2>
+      <p>Everything you need to know before you commit. Still have questions? Reach out directly.</p>
+      <a href="mailto:info@gameofpowerllc.com" class="btn-ghost" style="display:inline-block;margin-top:8px">Contact Us</a>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-qt">How quickly will I see results?</span>
+          <span class="faq-ic">+</span>
+        </button>
+        <p class="faq-a">Most clients see measurable movement in brand visibility and engagement within 30–60 days. Paid ads ramp up within 2–3 weeks of campaign launch. Long-term compounding results build over 3–6 months.</p>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-qt">What's included in the one-time Launchpad fee?</span>
+          <span class="faq-ic">+</span>
+        </button>
+        <p class="faq-a">A full brand audit, starter content pack, social profile optimization, a 60-day content calendar, competitive analysis, and a 30-minute strategy call. No recurring charges — ever.</p>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-qt">Can I upgrade my tier later?</span>
+          <span class="faq-ic">+</span>
+        </button>
+        <p class="faq-a">Absolutely. Many clients start with The Launchpad or Operator and upgrade as their business grows. The transition is seamless — your assets carry forward and unused time is credited.</p>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-qt">Do you work with businesses outside Louisiana?</span>
+          <span class="faq-ic">+</span>
+        </button>
+        <p class="faq-a">Yes. Game of Power LLC is Louisiana-registered but operates nationally. All services are delivered remotely through our digital-first workflow — location is no barrier.</p>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-qt">How does payment work?</span>
+          <span class="faq-ic">+</span>
+        </button>
+        <p class="faq-a">All payments are processed securely through Stripe. Monthly tiers bill on a recurring basis from signup. The Launchpad is a single charge. You'll receive a receipt for every transaction.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+
+<section id="cta">
+  <h2>Ready to <span>Strike?</span></h2>
+  <p>Stop leaving money on the table. The power is there — you just need someone to help you seize it.</p>
+  <a href="#pricing" class="btn-primary">Choose Your Tier</a>
+</section>
+
+<!-- ── FOOTER ── -->
+
+<footer>
+  <div class="ft-top">
+    <div>
+      <a href="#hero" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+        <svg width="32" height="32" viewBox="0 0 120 120" fill="none">
+          <path d="M60 8L16 26V58C16 82 35 102 60 110C85 102 104 82 104 58V26L60 8Z" fill="url(#ftShield)"/>
+          <defs>
+            <linearGradient id="ftShield" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#C9A84C"/><stop offset="100%" stop-color="#7A5018"/>
+            </linearGradient>
+          </defs>
+          <path d="M68 36L52 62H61L54 88L76 56H65L68 36Z" fill="#FFFBE6" opacity="0.9"/>
+        </svg>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.1em;color:#C9A84C">Game of Power <span style="color:rgba(255,255,255,0.4)">LLC</span></span>
+      </a>
+      <p class="ft-tagline">AI-powered marketing and brand development for businesses that play to win.</p>
+    </div>
+    <div class="ft-nav">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Brand Strategy</a></li>
+        <li><a href="#services">AI Content</a></li>
+        <li><a href="#services">Digital Ads</a></li>
+        <li><a href="#services">Social Media</a></li>
+      </ul>
+    </div>
+    <div class="ft-nav">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#process">Our Process</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="mailto:info@gameofpowerllc.com">Contact</a></li>
+      </ul>
+    </div>
+    <div class="ft-nav">
+      <h4>Get Started</h4>
+      <ul>
+        <li><a href="https://buy.stripe.com/6oUdR92aJ2EI7tBe8M8Ra02" target="_blank" rel="noopener">The Launchpad</a></li>
+        <li><a href="https://buy.stripe.com/cNi5kD6qZfru3dl5Cg8Ra03" target="_blank" rel="noopener">The Operator</a></li>
+        <li><a href="https://buy.stripe.com/9B69ATcPnenqaFN5Cg8Ra04" target="_blank" rel="noopener">The Architect</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <p class="ft-copy">© 2025 Game of Power LLC. All rights reserved.</p>
+    <p class="ft-state">Registered · State of Louisiana</p>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════ -->
+
+<script>
+// ── MOBILE NAV ──
+const toggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+toggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+// ── SCROLL REVEAL ──
+const reveals = document.querySelectorAll('.reveal');
+const revObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); revObserver.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => revObserver.observe(el));
+
+// ── FAQ ACCORDION ──
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ── RAIN CANVAS ──
+(function() {
+  const canvas = document.getElementById('rain-canvas');
+  const ctx = canvas.getContext('2d');
+  let drops = [];
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function initDrops() {
+    drops = [];
+    const count = Math.floor(canvas.width / 6);
+    for (let i = 0; i < count; i++) {
+      drops.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        len: Math.random() * 20 + 10,
+        speed: Math.random() * 3 + 2,
+        opacity: Math.random() * 0.4 + 0.1
+      });
+    }
+  }
+
+  function drawRain() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drops.forEach(d => {
+      ctx.strokeStyle = `rgba(180,210,255,${d.opacity})`;
+      ctx.lineWidth = 0.5;
+      ctx.beginPath();
+      ctx.moveTo(d.x, d.y);
+      ctx.lineTo(d.x - d.len * 0.15, d.y + d.len);
+      ctx.stroke();
+      d.y += d.speed;
+      if (d.y > canvas.height + d.len) {
+        d.y = -d.len;
+        d.x = Math.random() * canvas.width;
+      }
+    });
+    requestAnimationFrame(drawRain);
+  }
+
+  resize();
+  initDrops();
+  drawRain();
+  window.addEventListener('resize', () => { resize(); initDrops(); });
+})();
+
+// ── LIGHTNING CANVAS ──
+(function() {
+  const canvas = document.getElementById('lightning-canvas');
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  // Generate a jagged lightning path
+  function makeBolt(x1, y1, x2, y2, roughness) {
+    const points = [{x:x1, y:y1}];
+    const segments = 12;
+    for (let i = 1; i < segments; i++) {
+      const t = i / segments;
+      const mx = x1 + (x2 - x1) * t;
+      const my = y1 + (y2 - y1) * t;
+      const offset = (Math.random() - 0.5) * roughness * (1 - Math.abs(t - 0.5) * 1.5);
+      points.push({ x: mx + offset, y: my });
+    }
+    points.push({x:x2, y:y2});
+    return points;
+  }
+
+  function drawBolt(points, alpha, width) {
+    if (points.length < 2) return;
+    // Outer glow
+    ctx.save();
+    ctx.globalAlpha = alpha * 0.3;
+    ctx.strokeStyle = '#8BBFFF';
+    ctx.lineWidth = width * 4;
+    ctx.shadowColor = '#4A9FFF';
+    ctx.shadowBlur = 20;
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y);
+    ctx.stroke();
+
+    // Mid glow
+    ctx.globalAlpha = alpha * 0.5;
+    ctx.strokeStyle = '#C8E0FF';
+    ctx.lineWidth = width * 2;
+    ctx.shadowBlur = 12;
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y);
+    ctx.stroke();
+
+    // Core bright
+    ctx.globalAlpha = alpha;
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.lineWidth = width;
+    ctx.shadowColor = '#FFFFFF';
+    ctx.shadowBlur = 6;
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Strike object pool
+  const strikes = [];
+
+  function scheduleStrike() {
+    const delay = Math.random() * 5000 + 1500;
+    setTimeout(() => {
+      spawnStrike();
+      scheduleStrike();
+    }, delay);
+  }
+
+  function spawnStrike() {
+    const x = Math.random() * canvas.width;
+    const yEnd = canvas.height * (0.3 + Math.random() * 0.5);
+    const roughness = 80 + Math.random() * 120;
+    const mainBolt = makeBolt(x, 0, x + (Math.random()-0.5)*60, yEnd, roughness);
+
+    // Optional branch
+    const hasBranch = Math.random() > 0.4;
+    let branch = null;
+    if (hasBranch) {
+      const branchIdx = Math.floor(mainBolt.length * 0.4 + Math.random() * mainBolt.length * 0.3);
+      const bp = mainBolt[branchIdx];
+      const bx = bp.x + (Math.random()-0.5) * 120;
+      const by = bp.y + (Math.random() * 0.4 + 0.2) * (yEnd - bp.y);
+      branch = { points: makeBolt(bp.x, bp.y, bx, by, 50), startIdx: branchIdx };
+    }
+
+    strikes.push({
+      main: mainBolt,
+      branch,
+      t: 0,
+      duration: 0.12 + Math.random() * 0.08,
+      flicker: Math.floor(Math.random() * 2) + 1,
+      alpha: 0.7 + Math.random() * 0.3
+    });
+  }
+
+  let lastTime = 0;
+  function animate(ts) {
+    const dt = Math.min((ts - lastTime) / 1000, 0.05);
+    lastTime = ts;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = strikes.length - 1; i >= 0; i--) {
+      const s = strikes[i];
+      s.t += dt;
+      const progress = s.t / s.duration;
+
+      if (progress >= 1) { strikes.splice(i, 1); continue; }
+
+      // Flicker: alpha pulses
+      let a = s.alpha;
+      if (s.flicker > 0 && progress > 0.5) {
+        a *= (Math.sin(progress * Math.PI * 8) * 0.5 + 0.5);
+      }
+      a *= (1 - progress);
+
+      // Draw visible portion of bolt
+      const visIdx = Math.floor(s.main.length * Math.min(progress * 3, 1));
+      drawBolt(s.main.slice(0, Math.max(2, visIdx)), a, 1.2);
+
+      // Draw branch if past its start point
+      if (s.branch && visIdx > s.branch.startIdx) {
+        drawBolt(s.branch.points, a * 0.6, 0.7);
+      }
+
+      // Ground flash glow
+      if (progress > 0.6 && progress < 0.85) {
+        const gp = s.main[s.main.length - 1];
+        const gr = ctx.createRadialGradient(gp.x, gp.y, 0, gp.x, gp.y, 80);
+        gr.addColorStop(0, `rgba(180,210,255,${a * 0.4})`);
+        gr.addColorStop(1, 'transparent');
+        ctx.save();
+        ctx.fillStyle = gr;
+        ctx.beginPath();
+        ctx.arc(gp.x, gp.y, 80, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  scheduleStrike();
+  // Kick off a few early strikes
+  setTimeout(spawnStrike, 400);
+  setTimeout(spawnStrike, 1800);
+  requestAnimationFrame(animate);
+})();
+</script>
+
+</body>
+</html>
